@@ -1,21 +1,7 @@
 package nonGroovy.loop;
 
 import org.lwjgl.glfw.GLFW;
-
-import groovy.Character;
-
-import static org.lwjgl.opengl.GL11.*;
-
-import java.util.ArrayList;
-
-import nonGroovy.entitys.GameObject;
-import nonGroovy.models.ColouredModel;
-import nonGroovy.models.ModelGenerator;
-import nonGroovy.models.TexturedModel;
 import nonGroovy.renderer.BasicRenderer;
-import nonGroovy.renderer.Colour;
-import nonGroovy.renderer.TextureLoader;
-import nonGroovy.window.Window;
 import nonGroovy.window.input.KeyInputCallback;
 
 class Game implements Loopable {
@@ -34,6 +20,9 @@ class Game implements Loopable {
 		}
 		if(KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_J]){
 			manager.pushState(new JoeState());
+		}
+		if(KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_S]){
+			manager.pushState(new ShaunState());
 		}
 	}
 
