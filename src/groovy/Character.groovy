@@ -1,6 +1,8 @@
 package groovy
 
 import nonGroovy.entitys.GameObject
+import nonGroovy.models.ColouredModel
+import nonGroovy.models.ModelGenerator;
 import nonGroovy.models.Renderable;
 import nonGroovy.renderer.Colour
 
@@ -19,6 +21,8 @@ class Character implements GameObject{
 	Colour colour
 	
 	public Character() {
+		model = ModelGenerator.square();
+		colour = new Colour();
 	}
 
 	@Override

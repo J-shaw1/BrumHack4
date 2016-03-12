@@ -20,6 +20,9 @@ class Game implements Loopable {
 
 	Window w;
 
+	int xVel = 5;
+	int yVel = 5;
+	
 	BasicRenderer renderer;
 	private ColouredModel testModel;
 	
@@ -35,10 +38,10 @@ class Game implements Loopable {
 		c.setY(0);
 		c.setWidth(10);
 		c.setHeight(10);
+		c.setColour(new Colour(1f, 0f, 1f));
 		
 		gameObjects.add(c);
 		
-		testModel = new ColouredModel(ModelGenerator.square(), new Colour(1, 0, 0));
 	}
 
 	@Override
@@ -51,7 +54,33 @@ class Game implements Loopable {
 
 	@Override
 	public void update() {
-
+		for (GameObject gameObject : gameObjects) {
+			int tempX = gameObject.getX() + xVel;
+			int tempY = gameObject.getY() + yVel;
+			
+			if (tempX > 1080) {
+				tempX = 1080 - xVel;
+				xVel = -5;
+			}
+			
+			if (tempX < 0) {
+				tempX = xVel;
+				xVel = 5;
+			}
+			
+			if (tempY > 720) {
+				tempY = 720 - yVel;
+				yVel = -5;
+			}
+			
+			if (tempY < 0) {
+				tempY = yVel;
+				yVel = 5;
+			}
+			
+			gameObject.setX(tempX);
+			gameObject.setY(tempY);
+		}
 	}
 
 	@Override
