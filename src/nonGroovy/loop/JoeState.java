@@ -18,23 +18,17 @@ import nonGroovy.renderer.TextureLoader;
 import nonGroovy.window.Window;
 import nonGroovy.window.input.KeyInputCallback;
 
-class Game implements Loopable {
-	
-	BasicRenderer renderer;
-	GameStateManager manager;
+class JoeState implements Loopable {
 
-	public Game(GameStateManager manager) {
-		this.manager = manager;
+	BasicRenderer renderer;
+
+	public JoeState() {
+		renderer = new BasicRenderer();
+		glClearColor(0, 0, 1, 1);
 	}
 
 	@Override
 	public void input() {
-		if(KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_D]){
-			manager.pushState(new DixonState());
-		}
-		if(KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_J]){
-			manager.pushState(new JoeState());
-		}
 	}
 
 	@Override
@@ -45,11 +39,11 @@ class Game implements Loopable {
 	@Override
 	public void render() {
 		
+		renderer.render();
 	}
 
 	@Override
 	public boolean isLooping() {
 		return true;
 	}
-
 }

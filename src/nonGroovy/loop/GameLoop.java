@@ -6,10 +6,11 @@ public class GameLoop {
 	public static final long NANO_PER_SECOND = 1000 * 1000 * 1000;
 	public static final long NANO_PER_UPDATE = NANO_PER_SECOND / UPS;
 	
-	private Loopable loop;
+	private GameStateManager loop;
 	
 	public GameLoop() {
-		loop = new Game();
+		loop = new GameStateManager();
+		loop.pushState(new Game(loop));
 		loop();
 	}
 	
