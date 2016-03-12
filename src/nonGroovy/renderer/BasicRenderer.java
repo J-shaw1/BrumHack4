@@ -2,6 +2,7 @@ package nonGroovy.renderer;
 
 import java.util.ArrayList;
 
+import nonGroovy.entitys.GameObject;
 import nonGroovy.models.ColouredModel;
 import nonGroovy.models.Model;
 import nonGroovy.models.Renderable;
@@ -16,7 +17,7 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
 public class BasicRenderer {
 	
-	private ArrayList<Renderable> toRender;
+	private ArrayList<GameObject> toRender;
 	private BasicShader shader;
 	
 	
@@ -27,14 +28,11 @@ public class BasicRenderer {
 	}
 	
 	private void init(){
-//		glEnable(GL_CULL_FACE);
-//		glCullFace(GL_BACK);
-//		glEnable(GL_DEPTH_TEST);
-//		glDepthFunc(GL_LESS);
+		
 	}
 	
-	public void prepareEntity(Renderable model){
-		toRender.add(model);
+	public void prepareEntity(GameObject gameObject){
+		toRender.add(gameObject);
 	}
 	
 	public void render(){
@@ -42,8 +40,12 @@ public class BasicRenderer {
 		shader.enable();
 		glClear(GL_COLOR_BUFFER_BIT);
 		
-		for (Renderable renderable : toRender) {
-			Model model = renderable.getModel();
+		for (GameObject renderable : toRender) {
+			
+			
+			
+			
+			Model model = renderable.getModel().getModel();
 			
 			glBindVertexArray(model.getVaoID());
 			

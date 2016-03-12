@@ -1,5 +1,6 @@
 package nonGroovy.entitys;
 
+import nonGroovy.models.Renderable;
 import nonGroovy.renderer.Colour;
 
 public interface GameObject {
@@ -10,4 +11,5 @@ public interface GameObject {
 	public int getHeight();
 	
 	public Colour getColour();
+	public Renderable getModel();
 }

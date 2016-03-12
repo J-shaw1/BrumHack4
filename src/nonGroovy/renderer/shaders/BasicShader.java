@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import nonGroovy.maths.Vec2f;
+import nonGroovy.maths.Vec3f;
 
 public class BasicShader {
 
@@ -28,9 +29,10 @@ public class BasicShader {
 		
 		String fragString = "varying vec4 vertColor;\n"
 				+ "out vec4 FragColor;\n"
+				+ "uniform vec3f colour;\n"
 				+ ""
 				+ "void main(){\n"
-				+ "    FragColor = vertColor;\n"
+				+ "    FragColor = vec4(colour,1);\n"
 				+ "}";
 		
 		int vertexShaderID = loadShader(vertexString, GL_VERTEX_SHADER);
@@ -54,7 +56,11 @@ public class BasicShader {
 //		glUniform3f(location, vector.x, vector.y, vector.z);
 //	}
 
-	protected void loadVector(int location, Vec2f vector) {
+	protected void loadVector3(int location, Vec3f vector) {
+		glUniform3f(location, vector.x, vector.y, 1);
+	}
+	
+	protected void loadVector2(int location, Vec2f vector) {
 		glUniform3f(location, vector.x, vector.y, 1);
 	}
 	
