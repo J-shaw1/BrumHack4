@@ -5,7 +5,6 @@ class Transaction {
 	double amount
 	
 	Transaction(String[] parts){
-		println parts
 		time = parts[1]
 		description = parts[2]
 		amount = parts[3] as double
