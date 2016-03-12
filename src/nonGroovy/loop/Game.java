@@ -30,7 +30,7 @@ class Game implements Loopable {
 	@Override
 	public void input() {
 		if(KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_D]){
-			manager.pushState(new DixonState());
+			manager.pushState(new DixonState(manager));
 		}
 		if(KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_J]){
 			manager.pushState(new JoeState());
