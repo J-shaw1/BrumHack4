@@ -8,7 +8,7 @@ public class ModelGenerator {
 		float[] positions =  { -1f, 1f, 0f, -1f, -1f, 0f, 1f, -1f, 0f, 1f, -1f, 0f, 1f, 1f, 0f, -1f, 1f, 0f
 		};
 		
-		float[] textureCoords =  { -1f, 1f, -1f, -1f, 1f, -1f, 1f, -1f, 1f, 1f, -1f, 1f
+		float[] textureCoords =  { 0f, 1f, 0f, 0f, 1f, 0f, 1f, 0f, 1f, 1f, 0f, 1f
 		};
 		
 		return new Model(positions, textureCoords);

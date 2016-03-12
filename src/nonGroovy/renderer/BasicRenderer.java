@@ -67,6 +67,7 @@ public class BasicRenderer {
 				glDisableVertexAttribArray(0);
 				
 				glBindVertexArray(0);
+				basicShader.disable();
 			} else {
 				texturedShader.enable();
 				texturedShader.setColour(renderable.getColour());
@@ -78,6 +79,7 @@ public class BasicRenderer {
 				glBindVertexArray(model.getVaoID());
 				
 				glEnableVertexAttribArray(0);
+				glEnableVertexAttribArray(1);
 				
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, masterModel.GetTexture());	
@@ -86,8 +88,10 @@ public class BasicRenderer {
 				glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
 				// Disable Positions Vertex Array
 				glDisableVertexAttribArray(0);
+				glDisableVertexAttribArray(1);
 				
 				glBindVertexArray(0);
+				texturedShader.disable();
 			}
 			
 			

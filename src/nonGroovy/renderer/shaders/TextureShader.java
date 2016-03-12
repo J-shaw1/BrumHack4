@@ -22,8 +22,7 @@ public class TextureShader {
 
 		String vertexString = "#version 330\n"
 				+ "layout (location = 0) in vec3 position;\n"
-				+ "layout (location = 1) in vec3 normal;\n"
-				+ "layout (location = 2) in vec2 texture;\n"
+				+ "layout (location = 1) in vec2 texture;\n"
 				+ "uniform float width;\n"
 				+ "uniform float height;\n"
 				+ "uniform float xPosition;\n"
