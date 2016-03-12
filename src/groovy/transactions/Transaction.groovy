@@ -5,6 +5,10 @@ import nonGroovy.models.Renderable
 import nonGroovy.renderer.Colour
 
 class Transaction implements GameObject{
+	
+	static final int StartingX = 600
+	static final int moveSpeed = 3
+	
 	String time, description, tag, accountNumber, sortCode
 	TransactionEnums transactionType
 	double amount
@@ -13,6 +17,8 @@ class Transaction implements GameObject{
 	int width, height
 	Colour colour
 	Renderable model;
+	
+	MoveType[] moveTypes
 
 	Map transactionTypeMap = [
 		"CCD": TransactionEnums.CreditCardDeposit,
@@ -31,6 +37,11 @@ class Transaction implements GameObject{
 		transactionType = transactionTypeMap.get(parts[4])
 		tag = parts[5]
 		accountNumber = parts[6]
+		
+		moveTypes = MoveDirection.randomSingleMove()
+		
+		x = startingX
+		
 	}
 
 	double calculateAmountEffect(int hitAccuracy) {
@@ -43,6 +54,6 @@ class Transaction implements GameObject{
 
 	@Override
 	public void update() {
-		x -=1;
+		x -= moveSpeed;
 	}
 }

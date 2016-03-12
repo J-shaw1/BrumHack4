@@ -3,12 +3,9 @@ package groovy.transactions;
 import java.io.File;
 import java.util.List;
 
-class TransactionReader {
-	TransactionReader(){
-	}
-
-	List getTransactionList(File file) {
-		
+class Transactions extends ArrayList<Transaction>{
+	
+	Transactions(File file){
 		List transactions = new ArrayList()
 		file.eachLine { String line, int lineNumber ->
 			
@@ -20,10 +17,10 @@ class TransactionReader {
 			Transaction transaction = new Transaction(parts)
 			
 			if(["Credit Repayment", "-"].every { it != transaction.tag }) {
-				transactions.add(transaction)
+				this.add(transaction)
 			}
 			
 		}
-		return transactions
 	}
+
 }
