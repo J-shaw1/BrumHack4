@@ -7,6 +7,9 @@ class Character {
 	//Health
 	double money
 
+	int x,y
+	int width,height
+
 	public Character() {
 	}
 
