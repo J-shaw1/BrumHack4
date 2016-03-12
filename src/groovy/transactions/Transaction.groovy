@@ -24,4 +24,14 @@ class Transaction {
 		accountNumber = parts[6]
 	}
 	
+	double calculateAmountEffect(int hitAccuracy) {
+		if(amount >= 0) {
+			return amount * hitAccuracy / 100
+		} else if(amount < 0) {
+			return amount + ((HitAccuracy.PERFECT - hitAccuracy) * amount)/100
+		}
+		
+	}
+	
+	
 }
