@@ -31,7 +31,6 @@ public class BasicShader {
 				+ "    gl_Position = gl_Vertex;\n"
 				+ "	   gl_Position.x = (gl_Position.x * (float(width)/1080.0)) + ((xPosition - 540)/540);\n"
 				+ "	   gl_Position.y = gl_Position.y * (float(height) / 720.0) + ((yPosition - 360)/360);\n"
-				+ "    vertColor = vec4(0.6, 0.3, 0.4, 1.0);\n"
 				+ "}";
 		
 		String fragString = "varying vec4 vertColor;\n"
@@ -52,9 +51,9 @@ public class BasicShader {
 		glLinkProgram(programID);
 		glValidateProgram(programID);
 		
+		locationColour = glGetUniformLocation(programID, "colour");
 		locationX = glGetUniformLocation(programID, "xPosition");
 		locationY = glGetUniformLocation(programID, "yPosition");
-		locationColour = glGetUniformLocation(programID, "colour");
 		locationWidth = glGetUniformLocation(programID, "width");
 		locationHeight = glGetUniformLocation(programID, "height");
 		
@@ -88,7 +87,7 @@ public class BasicShader {
 	}
 	
 	protected void loadVector3(int location, Vec3f vector) {
-		glUniform3f(location, vector.x, vector.y, 1);
+		glUniform3f(location, vector.x, vector.y, vector.z);
 	}
 	
 	protected void loadVector2(int location, Vec2f vector) {

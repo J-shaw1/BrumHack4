@@ -52,6 +52,7 @@ public class BasicRenderer {
 			if (masterModel.GetTexture() == -1) {
 				basicShader.enable();
 				basicShader.setColour(renderable.getColour());
+				System.out.println(renderable.getColour());
 				basicShader.setHeight(renderable.getHeight());
 				basicShader.setWidth(renderable.getWidth());
 				basicShader.setX(renderable.getX());

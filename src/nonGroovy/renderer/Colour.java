@@ -22,4 +22,7 @@ public class Colour {
 		this.b = b/255f;
 	}
 	
+	public String toString(){
+		return "Colour - r: " + r + " g: " + g + " b: " + b;
+	}
 }
