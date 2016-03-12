@@ -21,10 +21,6 @@ class Character implements GameObject{
 	public Character() {
 	}
 
-	public Renderable getModel() {
-		return model;
-	}
-
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
