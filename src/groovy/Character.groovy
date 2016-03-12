@@ -31,4 +31,9 @@ class Character implements GameObject{
 		
 	}
 
+	void changeScore(double scoreChange) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

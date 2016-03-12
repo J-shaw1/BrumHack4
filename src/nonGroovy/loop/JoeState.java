@@ -14,7 +14,6 @@ import nonGroovy.entitys.GameObject;
 import nonGroovy.models.ColouredModel;
 import nonGroovy.renderer.BasicRenderer;
 import nonGroovy.renderer.Colour;
-import nonGroovy.window.Window;
 import nonGroovy.window.input.KeyInputCallback;
 
 class JoeState implements Loopable {
@@ -25,11 +24,10 @@ class JoeState implements Loopable {
 	Transactions transactions;
 	long transactionInterval = (long) (1 * GameLoop.NANO_PER_SECOND);
 	long nextTransaction;
-	
-	double score;
-	
+		
 	BasicRenderer renderer;
 	private ColouredModel testModel;
+	Character c;
 	
 	private ArrayList<GameObject> gameObjects;
 
@@ -37,7 +35,7 @@ class JoeState implements Loopable {
 		renderer = new BasicRenderer();
 		gameObjects = new ArrayList<>();
 		
-		Character c = new Character();
+		c = new Character();
 		c.setX(0);
 		c.setY(0);
 		c.setWidth(10);
@@ -103,7 +101,7 @@ class JoeState implements Loopable {
 					if(t.getMoveTypes()[0] == MoveType.up){
 						if(t.getX() > TransactionConstants.getPERFECT_HIT_X() - 100 && t.getX() < TransactionConstants.getPERFECT_HIT_X() + 100){
 							//if we have a hit
-							score += t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X()));
+							c.changeScore(t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X())));
 						}
 					}
 				}
