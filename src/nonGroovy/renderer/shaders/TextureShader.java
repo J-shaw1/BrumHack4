@@ -44,7 +44,7 @@ public class TextureShader {
 				+ ""
 				+ "void main(){\n"
 				+ "    FragColor = vec4(colour,1);\n"
-				+ "	   FragColor = texture2D(myTexture, textureCoord);"
+				+ "	   FragColor = texture2D(myTexture, vec2(textureCoord.x,1-textureCoord.y));"
 				+ "}";
 		
 		int vertexShaderID = loadShader(vertexString, GL_VERTEX_SHADER);
