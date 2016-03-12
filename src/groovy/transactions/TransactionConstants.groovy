@@ -1,0 +1,16 @@
+package groovy.transactions;
+
+public class TransactionConstants {
+
+	static final int STARTING_X = 1000
+	static final int Y_UP = 600
+	static final int Y_DOWN = 400
+	static final int Y_LEFT = 500
+	static final int Y_RIGHT = 300
+	static final int WIDTH = 40
+	static final int HEIGHT = 40
+	static final int MOVE_SPEED = 4
+	
+	static final int PERFECT_HIT_X = 500
+	
+}
