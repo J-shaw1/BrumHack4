@@ -44,8 +44,11 @@ public class BasicRenderer {
 			
 			
 			Model model = renderable.getModel().getModel();
-			System.out.println(renderable.getColour().r + " " + renderable.getColour().g + " " + renderable.getColour().b);
 			shader.setColour(renderable.getColour());
+			shader.setHeight(renderable.getHeight());
+			shader.setWidth(renderable.getWidth());
+			shader.setX(renderable.getX());
+			shader.setY(renderable.getY());
 			
 			glBindVertexArray(model.getVaoID());
 			

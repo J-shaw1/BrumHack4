@@ -22,9 +22,15 @@ public class BasicShader {
 
 		String vertexString = "varying vec4 vertColor;\n"
 				+ "in vec3 position;\n"
+				+ "uniform float width;\n"
+				+ "uniform float height;\n"
+				+ "uniform float xPosition;\n"
+				+ "uniform float yPosition;\n"
+				+ "\n"
 				+ "void main(){\n"
 				+ "    gl_Position = gl_Vertex;\n"
-				+ "	   gl_Position.x = gl_Position.x * (720.0/1080.0);\n"
+				+ "	   gl_Position.x = (gl_Position.x * (float(width)/1080.0)) + ((xPosition - 540)/540);\n"
+				+ "	   gl_Position.y = gl_Position.y * (float(height) / 720.0) + ((yPosition - 360)/360);\n"
 				+ "    vertColor = vec4(0.6, 0.3, 0.4, 1.0);\n"
 				+ "}";
 		
@@ -46,15 +52,39 @@ public class BasicShader {
 		glLinkProgram(programID);
 		glValidateProgram(programID);
 		
+		locationX = glGetUniformLocation(programID, "xPosition");
+		locationY = glGetUniformLocation(programID, "yPosition");
 		locationColour = glGetUniformLocation(programID, "colour");
+		locationWidth = glGetUniformLocation(programID, "width");
+		locationHeight = glGetUniformLocation(programID, "height");
 		
-		System.out.println(locationColour);
+		
 	}
 
 	private int locationColour;
+	private int locationWidth;
+	private int locationHeight;
+	private int locationX;
+	private int locationY;
 	
 	public void setColour(Colour c){
 		loadVector3(locationColour, new Vec3f(c.r, c.g, c.b));
+	}
+	
+	public void setWidth(int f){
+		loadFloat(locationWidth, f);
+	}
+	
+	public void setHeight(int f){
+		loadFloat(locationHeight, f);
+	}
+	
+	public void setX(int f){
+		loadFloat(locationX, f);
+	}
+	
+	public void setY(int f){
+		loadFloat(locationY, f);
 	}
 	
 	protected void loadVector3(int location, Vec3f vector) {
