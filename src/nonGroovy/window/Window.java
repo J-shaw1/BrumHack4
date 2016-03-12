@@ -17,6 +17,8 @@ public class Window {
 	
 	public static final String WINDOW_TITLE = "We Need A Name!";
 	
+	private  GLFWKeyCallback keyCallback;
+	
 	long windowID;
 	
 	public Window(){
@@ -33,7 +35,7 @@ public class Window {
 	        windowID = glfwCreateWindow(WIDTH, HEIGHT, WINDOW_TITLE, NULL, NULL);
 	        if ( windowID == NULL )
 	            throw new RuntimeException("Failed to create the GLFW window");
-	    GLFWKeyCallback keyCallback = new KeyInputCallback();    
+	        keyCallback = new KeyInputCallback();    
 		glfwSetKeyCallback(windowID, keyCallback);
 		
 		glfwMakeContextCurrent(windowID);
