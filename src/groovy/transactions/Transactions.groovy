@@ -5,6 +5,8 @@ import java.util.List;
 
 class Transactions extends ArrayList<Transaction>{
 	
+	int place = -1;
+	
 	Transactions(File file){
 		List transactions = new ArrayList()
 		file.eachLine { String line, int lineNumber ->
@@ -21,6 +23,10 @@ class Transactions extends ArrayList<Transaction>{
 			}
 			
 		}
+	}
+	
+	Transaction getNext() {
+		return this.get(++place)
 	}
 
 }

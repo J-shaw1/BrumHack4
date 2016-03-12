@@ -1,13 +1,22 @@
 package groovy.transactions
 
+import java.lang.invoke.SwitchPoint;
+
 import nonGroovy.entitys.GameObject
+import nonGroovy.models.ModelGenerator
 import nonGroovy.models.Renderable
 import nonGroovy.renderer.Colour
 
 class Transaction implements GameObject{
 	
-	static final int StartingX = 600
-	static final int moveSpeed = 3
+	static final int STARTING_X = 600
+	static final int Y_UP = 600
+	static final int Y_DOWN = 500
+	static final int Y_LEFT = 400
+	static final int Y_RIGHT = 300
+	static final int WIDTH = 20
+	static final int HEIGHT = 20
+	static final int MOVE_SPEED = 3
 	
 	String time, description, tag, accountNumber, sortCode
 	TransactionEnums transactionType
@@ -15,8 +24,9 @@ class Transaction implements GameObject{
 
 	int x, y
 	int width, height
-	Colour colour
-	Renderable model;
+	static Random r = new Random()
+	Colour colour = new Colour(r.nextInt(256),r.nextInt(256),r.nextInt(256))
+	Renderable model = ModelGenerator.square()
 	
 	MoveType[] moveTypes
 
@@ -40,7 +50,25 @@ class Transaction implements GameObject{
 		
 		moveTypes = MoveDirection.randomSingleMove()
 		
-		x = startingX
+		x = STARTING_X
+		
+		switch(moveTypes[0]) {
+			case MoveType.up:
+				y = Y_UP
+				break;
+			case MoveType.down:
+				y = Y_DOWN
+				break;
+			case MoveType.left:
+				y = Y_LEFT
+				break;
+			case MoveType.right:
+				y = Y_RIGHT
+				break;
+		}
+		
+		this.width = WIDTH
+		this.height = HEIGHT
 		
 	}
 
@@ -54,6 +82,6 @@ class Transaction implements GameObject{
 
 	@Override
 	public void update() {
-		x -= moveSpeed;
+		x -= MOVE_SPEED;
 	}
 }
