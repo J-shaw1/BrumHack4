@@ -18,7 +18,10 @@ class TransactionReader {
 			String[] parts = line.split(",")
 			
 			Transaction transaction = new Transaction(parts)
-			transactions.add(transaction)
+			
+			if(["Credit Repayment", "-"].every { it != transaction.tag }) {
+				transactions.add(transaction)
+			}
 			
 		}
 		return transactions
