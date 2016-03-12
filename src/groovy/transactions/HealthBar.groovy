@@ -26,7 +26,15 @@ class HealthBar implements GameObject{
 	public void update(){
 		if(green){
 			int y = (int)Math.round(c.getMoney());
-			setWidth(y)
+			if(y > 0){
+				int curX = this.getX()
+				curX = 260 - (500-y)/2
+				println curX
+				this.setX(curX)
+				setWidth(y)
+			}else {
+				y = 0;
+			}
 		}
 	}
 }
