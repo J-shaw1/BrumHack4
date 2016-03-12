@@ -10,4 +10,5 @@ repositories {
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.5'
+	compile 'org.lwjgl:lwjgl:3.0.0b'
 }  
