@@ -7,7 +7,7 @@ public class Colour {
 	public float b;
 	
 	public Colour(){
-		this(1, 0.5f, 1);
+		this(1, 0f, 1);
 	}
 	
 	public Colour(float r, float g, float b){

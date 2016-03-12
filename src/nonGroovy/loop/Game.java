@@ -35,10 +35,10 @@ class Game implements Loopable {
 		c.setY(0);
 		c.setWidth(10);
 		c.setHeight(10);
+		c.setColour(new Colour(1f, 0f, 1f));
 		
 		gameObjects.add(c);
 		
-		testModel = new ColouredModel(ModelGenerator.square(), new Colour(1, 0, 0));
 	}
 
 	@Override

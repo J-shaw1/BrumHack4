@@ -10,7 +10,7 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
-public class Model {
+public class Model implements Renderable{
 
 	private int vaoID;
 	private int vertexCount;
@@ -56,6 +56,11 @@ public class Model {
 		buffer.put(floatArray);
 		buffer.flip();
 		return buffer;
+	}
+
+	@Override
+	public Model getModel() {
+		return this;
 	}
 
 }

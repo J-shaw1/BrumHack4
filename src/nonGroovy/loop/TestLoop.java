@@ -42,7 +42,7 @@ class TestLoop implements Loopable {
 
 	@Override
 	public void render() {
-		renderer.prepareEntity(testModel);
+		//renderer.prepareEntity(testModel);
 		renderer.render();
 
 		w.swapBuffers();

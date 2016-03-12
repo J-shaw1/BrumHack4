@@ -43,9 +43,9 @@ public class BasicRenderer {
 		for (GameObject renderable : toRender) {
 			
 			
-			
-			
 			Model model = renderable.getModel().getModel();
+			System.out.println(renderable.getColour().r + " " + renderable.getColour().g + " " + renderable.getColour().b);
+			shader.setColour(renderable.getColour());
 			
 			glBindVertexArray(model.getVaoID());
 			

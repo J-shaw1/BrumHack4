@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import nonGroovy.maths.Vec2f;
 import nonGroovy.maths.Vec3f;
+import nonGroovy.renderer.Colour;
 
 public class BasicShader {
 
@@ -29,7 +30,7 @@ public class BasicShader {
 		
 		String fragString = "varying vec4 vertColor;\n"
 				+ "out vec4 FragColor;\n"
-				+ "uniform vec3f colour;\n"
+				+ "uniform vec3 colour;\n"
 				+ ""
 				+ "void main(){\n"
 				+ "    FragColor = vec4(colour,1);\n"
@@ -44,18 +45,18 @@ public class BasicShader {
 		
 		glLinkProgram(programID);
 		glValidateProgram(programID);
+		
+		locationColour = glGetUniformLocation(programID, "colour");
+		
+		System.out.println(locationColour);
+	}
+
+	private int locationColour;
+	
+	public void setColour(Colour c){
+		loadVector3(locationColour, new Vec3f(c.r, c.g, c.b));
 	}
 	
-	
-//	protected void loadMatrix(int location, Mat4f matrix) {
-//		glUniformMatrix4fv(location, false, matrix.toFloatBuffer());
-//	}
-	
-
-//	protected void loadVector(int location, Vec3f vector) {
-//		glUniform3f(location, vector.x, vector.y, vector.z);
-//	}
-
 	protected void loadVector3(int location, Vec3f vector) {
 		glUniform3f(location, vector.x, vector.y, 1);
 	}

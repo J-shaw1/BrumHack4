@@ -17,7 +17,7 @@ public class GameLoop {
 	private ColouredModel testModel;
 	
 	public GameLoop() {
-		loop = new TestLoop();
+		loop = new Game();
 		loop();
 	}
 	
