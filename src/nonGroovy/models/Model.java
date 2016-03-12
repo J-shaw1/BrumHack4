@@ -16,15 +16,18 @@ public class Model {
 	private int vertexCount;
 
 	public Model(float[] positions) {
+		
 		this.vaoID = glGenVertexArrays();
-		this.vertexCount = positions.length / 2;
+		this.vertexCount = positions.length / 3;
 
 		glBindVertexArray(vaoID);
+		
+		storeVertextAttributeData(0, positions);
 
 		glBindVertexArray(0);
 	}
 
-	private void storeVertextAttributeData(int attributeLocation, float[] data, int sizeOfElement) {
+	private void storeVertextAttributeData(int attributeLocation, float[] data) {
 
 		// Generate VBO
 		int vboID = glGenBuffers();
@@ -35,16 +38,17 @@ public class Model {
 		// Store Position Data in VBO
 		glBufferData(GL_ARRAY_BUFFER, positionsBuffer, GL_STATIC_DRAW);
 		// Specify The Structure and Type of The Data in The VBO
-		glVertexAttribPointer(attributeLocation, sizeOfElement, GL_FLOAT, false, 0, 0);
+		glVertexAttribPointer(attributeLocation, 3, GL_FLOAT, false, 0, 0);
 		// Unbind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	private IntBuffer toIntBuffer(int[] indices) {
-		IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
-		buffer.put(indices);
-		buffer.flip();
-		return buffer;
+	public int getVaoID(){
+		return this.vaoID;
+	}
+	
+	public int getVertexCount(){
+		return this.vertexCount;
 	}
 
 	private FloatBuffer toFloatBuffer(float[] floatArray) {

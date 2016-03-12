@@ -1,20 +1,25 @@
 package nonGroovy.loop;
 
+
+
+import nonGroovy.models.ColouredModel;
+import nonGroovy.models.ModelGenerator;
+import nonGroovy.renderer.Colour;
+
 public class GameLoop {
 
 	public static final int UPS = 60;
 	public static final long NANO_PER_SECOND = 1000 * 1000 * 1000;
 	public static final long NANO_PER_UPDATE = NANO_PER_SECOND / UPS;
 	
-	
-	
 	private Loopable loop;
+	
+	private ColouredModel testModel;
 	
 	public GameLoop() {
 		loop = new TestLoop();
 		loop();
 	}
-
 	
 	private void loop(){
 		
