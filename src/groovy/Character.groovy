@@ -1,6 +1,7 @@
 package groovy
 
 import nonGroovy.entitys.GameObject
+import nonGroovy.models.Renderable;
 import nonGroovy.renderer.Colour
 
 class Character implements GameObject{
@@ -12,10 +13,16 @@ class Character implements GameObject{
 
 	int x,y
 	int width,height
+	
+	Renderable model;
 
 	Colour colour
 	
 	public Character() {
+	}
+
+	public Renderable getModel() {
+		return model;
 	}
 
 }
