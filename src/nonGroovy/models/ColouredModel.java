@@ -19,4 +19,9 @@ public class ColouredModel implements Renderable{
 	public Colour getBaseColour() {
 		return baseColour;
 	}
+
+	@Override
+	public int GetTexture() {
+		return -1;
+	}
 }

@@ -22,12 +22,25 @@ public class Model implements Renderable{
 
 		glBindVertexArray(vaoID);
 		
-		storeVertextAttributeData(0, positions);
+		storeVertextAttributeData(0, positions, 3);
 
 		glBindVertexArray(0);
 	}
 
-	private void storeVertextAttributeData(int attributeLocation, float[] data) {
+	public Model(float[] positions, float[] textureCoords) {
+		
+		this.vaoID = glGenVertexArrays();
+		this.vertexCount = positions.length / 3;
+
+		glBindVertexArray(vaoID);
+		
+		storeVertextAttributeData(0, positions, 3);
+		storeVertextAttributeData(1, textureCoords, 2);
+
+		glBindVertexArray(0);
+	}
+
+	private void storeVertextAttributeData(int attributeLocation, float[] data, int sizeOfElement) {
 
 		// Generate VBO
 		int vboID = glGenBuffers();
@@ -38,7 +51,7 @@ public class Model implements Renderable{
 		// Store Position Data in VBO
 		glBufferData(GL_ARRAY_BUFFER, positionsBuffer, GL_STATIC_DRAW);
 		// Specify The Structure and Type of The Data in The VBO
-		glVertexAttribPointer(attributeLocation, 3, GL_FLOAT, false, 0, 0);
+		glVertexAttribPointer(attributeLocation, sizeOfElement, GL_FLOAT, false, 0, 0);
 		// Unbind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
@@ -61,6 +74,11 @@ public class Model implements Renderable{
 	@Override
 	public Model getModel() {
 		return this;
+	}
+
+	@Override
+	public int GetTexture() {
+		return -1;
 	}
 
 }

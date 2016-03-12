@@ -4,7 +4,6 @@ import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
-import groovy.transactions.TransactionReader;
 import nonGroovy.window.input.KeyInputCallback;
 
 import static org.lwjgl.glfw.GLFW.*;

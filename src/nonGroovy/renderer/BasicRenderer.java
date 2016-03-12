@@ -7,6 +7,7 @@ import nonGroovy.models.ColouredModel;
 import nonGroovy.models.Model;
 import nonGroovy.models.Renderable;
 import nonGroovy.renderer.shaders.BasicShader;
+import nonGroovy.renderer.shaders.TextureShader;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
@@ -18,12 +19,14 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 public class BasicRenderer {
 	
 	private ArrayList<GameObject> toRender;
-	private BasicShader shader;
+	private BasicShader basicShader;
+	private TextureShader texturedShader;
 	
 	
 	public BasicRenderer(){
 		 toRender = new ArrayList<>();
-		 shader = new BasicShader();
+		 basicShader = new BasicShader();
+		 texturedShader = new TextureShader();
 		 init();
 	}
 	
@@ -37,29 +40,56 @@ public class BasicRenderer {
 	
 	public void render(){
 		
-		shader.enable();
+		
 		glClear(GL_COLOR_BUFFER_BIT);
 		
 		for (GameObject renderable : toRender) {
 			
+			Renderable masterModel = renderable.getModel();
 			
-			Model model = renderable.getModel().getModel();
-			shader.setColour(renderable.getColour());
-			shader.setHeight(renderable.getHeight());
-			shader.setWidth(renderable.getWidth());
-			shader.setX(renderable.getX());
-			shader.setY(renderable.getY());
+			Model model = masterModel.getModel();
 			
-			glBindVertexArray(model.getVaoID());
+			if (masterModel.GetTexture() == -1) {
+				basicShader.enable();
+				basicShader.setColour(renderable.getColour());
+				basicShader.setHeight(renderable.getHeight());
+				basicShader.setWidth(renderable.getWidth());
+				basicShader.setX(renderable.getX());
+				basicShader.setY(renderable.getY());
+				
+				glBindVertexArray(model.getVaoID());
+				
+				glEnableVertexAttribArray(0);
+				
+				//glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
+				glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
+				// Disable Positions Vertex Array
+				glDisableVertexAttribArray(0);
+				
+				glBindVertexArray(0);
+			} else {
+				texturedShader.enable();
+				texturedShader.setColour(renderable.getColour());
+				texturedShader.setHeight(renderable.getHeight());
+				texturedShader.setWidth(renderable.getWidth());
+				texturedShader.setX(renderable.getX());
+				texturedShader.setY(renderable.getY());
+				
+				glBindVertexArray(model.getVaoID());
+				
+				glEnableVertexAttribArray(0);
+				
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, masterModel.GetTexture());	
+				
+				//glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
+				glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
+				// Disable Positions Vertex Array
+				glDisableVertexAttribArray(0);
+				
+				glBindVertexArray(0);
+			}
 			
-			glEnableVertexAttribArray(0);
-			
-			//glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
-			glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
-			// Disable Positions Vertex Array
-			glDisableVertexAttribArray(0);
-			
-			glBindVertexArray(0);
 			
 		}
 		toRender.clear();
