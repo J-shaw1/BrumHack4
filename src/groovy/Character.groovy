@@ -1,6 +1,9 @@
 package groovy
 
-class Character {
+import nonGroovy.entitys.GameObject
+import nonGroovy.renderer.Colour
+
+class Character implements GameObject{
 
 	//Location for Icon
 	File icon
@@ -10,6 +13,8 @@ class Character {
 	int x,y
 	int width,height
 
+	Colour colour
+	
 	public Character() {
 	}
 
