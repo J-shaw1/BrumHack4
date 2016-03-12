@@ -25,4 +25,10 @@ class Character implements GameObject{
 		return model;
 	}
 
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

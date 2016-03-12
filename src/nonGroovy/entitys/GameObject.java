@@ -12,4 +12,6 @@ public interface GameObject {
 	
 	public Colour getColour();
 	public Renderable getModel();
+	
+	public void update();
 }
