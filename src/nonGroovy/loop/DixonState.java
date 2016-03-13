@@ -189,7 +189,6 @@ class DixonState implements Loopable {
 			}
 
 			if (t.getRemove()) {
-
 				transactions.remove(i);
 				transactions.backPlace();
 			} else {

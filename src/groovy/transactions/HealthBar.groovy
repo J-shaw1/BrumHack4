@@ -29,11 +29,13 @@ class HealthBar implements GameObject{
 			if(y < 900){
 				if(y > 0){
 					int curX = this.getX()
-					curX = 260 - (500-y)/2
+					curX = 460 - (900-y)/2
 					this.setX(curX)
 					setWidth(y)
 				}else {
 					y = 0;
+					int curX = 460
+					setX(curX)
 					setWidth(y)
 				}
 			} else {
