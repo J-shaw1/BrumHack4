@@ -61,9 +61,9 @@ class Transaction implements GameObject{
 
 	double calculateAmountEffect(int hitAccuracy) {
 		if(amount >= 0) {
-			return (TransactionConstants.getPERFECT_FLOAT() - hitAccuracy / TransactionConstants.getPERFECT_FLOAT()) * amount
+			return ((TransactionConstants.getPERFECT_FLOAT() - hitAccuracy) / TransactionConstants.getPERFECT_FLOAT()) * amount
 		} else if(amount < 0) {
-			return amount - ((TransactionConstants.getPERFECT_FLOAT() - hitAccuracy / TransactionConstants.getPERFECT_FLOAT()) * amount)
+			return amount - (((TransactionConstants.getPERFECT_FLOAT() - hitAccuracy) / TransactionConstants.getPERFECT_FLOAT()) * amount)
 		}
 	}
 
