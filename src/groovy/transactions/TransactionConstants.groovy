@@ -11,6 +11,7 @@ public class TransactionConstants {
 	static final int HEIGHT = 40
 	static final int MOVE_SPEED = 4
 	
+	static final int PERFECT_FLOAT = 100
 	static final int PERFECT_HIT_X = 500
 	
 }

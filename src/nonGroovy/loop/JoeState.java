@@ -45,7 +45,7 @@ class JoeState implements Loopable {
 		
 		//demo lines
 		Character left = new Character();
-		left.setX(TransactionConstants.getPERFECT_HIT_X() - 100);
+		left.setX(TransactionConstants.getPERFECT_HIT_X() - TransactionConstants.getPERFECT_FLOAT());
 		left.setY(500);
 		left.setWidth(1);
 		left.setHeight(1000);
@@ -61,7 +61,7 @@ class JoeState implements Loopable {
 		gameObjects.add(center);
 		
 		Character right = new Character();
-		right.setX(TransactionConstants.getPERFECT_HIT_X() + 100);
+		right.setX(TransactionConstants.getPERFECT_HIT_X() + TransactionConstants.getPERFECT_FLOAT());
 		right.setY(500);
 		right.setWidth(1);
 		right.setHeight(1000);
@@ -121,35 +121,35 @@ class JoeState implements Loopable {
 	}
 
 	public void processAction(MoveType moveType){	
-		for(GameObject gameObject : gameObjects){
-			if(gameObject instanceof Transaction){
-				
-				Transaction t = (Transaction) gameObject;
-				
-				if(t.getMoveTypes()[0] == moveType){
-					if(t.getX() > TransactionConstants.getPERFECT_HIT_X() - 100 && t.getX() < TransactionConstants.getPERFECT_HIT_X() + 100){
-						//if we have a hit
-						c.changeScore(t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X())));
-						t.setRemove(true);
-					}
+
+		for(Transaction t : transactions)	
+			if(t.getMoveTypes()[0] == moveType){
+				if(t.getX() > TransactionConstants.getPERFECT_HIT_X() - TransactionConstants.getPERFECT_FLOAT() 
+						&& t.getX() < TransactionConstants.getPERFECT_HIT_X() + TransactionConstants.getPERFECT_FLOAT()){
+					//if we have a hit
+					c.changeScore(t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X())));
+					t.setRemove(true);
 				}
 			}
-		}
+
 	}
 	
 	@Override
 	public void update() {
 		
 		if(System.nanoTime() > nextTransaction){
-			gameObjects.add(transactions.getNext());
+			transactions.gotoNext();
 			nextTransaction += transactionInterval;
 		}
 		
 		//Clean up
-		for(int i = gameObjects.size() - 1; i >=0; i--) {
+		for(int i = transactions.getPlace(); i >=0; i--) {
 			
-			if(gameObjects.get(i).getRemove() || gameObjects.get(i).getX() < TransactionConstants.getPERFECT_HIT_X() - 150) {
-				gameObjects.remove(i);
+			if(transactions.get(i).getRemove() || (transactions.get(i).getX() < TransactionConstants.getPERFECT_HIT_X() - TransactionConstants.getPERFECT_FLOAT() - 50)) {
+				transactions.remove(i);
+				transactions.backPlace();
+			} else {
+				transactions.get(i).update();
 			}
 		}
 		
@@ -157,11 +157,15 @@ class JoeState implements Loopable {
 		for (GameObject gameObject : gameObjects) {			
 			gameObject.update();
 		}
-		//System.out.println("Score: " + score);
+
 	}
 
 	@Override
 	public void render() {
+		
+		for(int i = 0; i <= transactions.getPlace(); i++) {
+			renderer.prepareEntity(transactions.get(i));
+		}
 		
 		for (GameObject gameObject : gameObjects) {
 			renderer.prepareEntity(gameObject);

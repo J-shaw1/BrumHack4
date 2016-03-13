@@ -25,8 +25,11 @@ class Transactions extends ArrayList<Transaction>{
 		}
 	}
 	
-	Transaction getNext() {
-		return this.get(++place)
+	void gotoNext() {
+		place++
 	}
-
+	
+	void backPlace() {
+		place--
+	}
 }
