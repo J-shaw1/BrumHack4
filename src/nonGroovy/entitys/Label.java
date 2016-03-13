@@ -10,6 +10,13 @@ public class Label implements GameObject{
 	private TextModel model;
 	private boolean remove = false;
 	
+	private float x;
+	private float y;
+	
+	private float xVel = 3;
+	private float yVel = 3;
+	private float yAcc = -0.1f; 
+	
 	public Label(GameObject object, TextModel model) {
 		this.object = object;
 		this.model = model;
@@ -28,12 +35,12 @@ public class Label implements GameObject{
 
 	@Override
 	public void setX(int x) {
-
+		this.x = x;
 	}
 
 	@Override
 	public void setY(int y) {
-
+		this.y = y;
 	}
 
 	@Override
@@ -62,6 +69,15 @@ public class Label implements GameObject{
 			model.setX(object.getX());
 			model.setY((int) (object.getY() - object.getHeight() * 0.75));
 			if(object.getRemove()){
+				remove = true;
+			}
+		} else {
+			x += xVel;
+			model.setX((int) x);
+			y += yVel;
+			yVel += yAcc;
+			model.setY((int) y);
+			if (y < -500) {
 				remove = true;
 			}
 		}

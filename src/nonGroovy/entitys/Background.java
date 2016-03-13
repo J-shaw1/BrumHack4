@@ -14,6 +14,8 @@ public class Background {
 	private StaticObject backgroundPA;
 	private StaticObject backgroundB;
 	private StaticObject backgroundPB;
+	
+	public float speedMultiplier;
 
 	public Background(double backgroundSpeed, double parallaxSpeed){
 		this.backgroundSpeed = backgroundSpeed;
@@ -24,8 +26,20 @@ public class Background {
 		backgroundPB = new StaticObject(2340, 360, 1800, 720, new TexturedModel(ModelGenerator.square(), TextureLoader.loadTexture("backgroundParallax.png")));
 	}
 	
-	public void update(){
+	
+	public Background(float i) {
+		this.speedMultiplier = i;
+		this.backgroundSpeed = -2 * i;
+		this.parallaxSpeed = -4 * i;
+		backgroundA = new StaticObject(540, 360, 1800, 720, new TexturedModel(ModelGenerator.square(), TextureLoader.loadTexture("background.png")));
+		backgroundPA = new StaticObject(540, 360, 1800, 720, new TexturedModel(ModelGenerator.square(), TextureLoader.loadTexture("backgroundParallax.png")));
+		backgroundB = new StaticObject(2340, 360, 1800, 720, new TexturedModel(ModelGenerator.square(), TextureLoader.loadTexture("background.png")));
+		backgroundPB = new StaticObject(2340, 360, 1800, 720, new TexturedModel(ModelGenerator.square(), TextureLoader.loadTexture("backgroundParallax.png")));
+	}
 
+	public void update(){
+		this.backgroundSpeed = -2 * speedMultiplier;
+		this.parallaxSpeed = -4 * speedMultiplier;
 		backgroundA.increaseX(backgroundSpeed);
 		backgroundPA.increaseX(parallaxSpeed);
 		backgroundB.increaseX(backgroundSpeed);

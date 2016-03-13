@@ -36,7 +36,7 @@ class ShaunState implements Loopable {
 
 	int timeoutReset = 30;
 
-	long transactionInterval = (long) (1 * GameLoop.NANO_PER_SECOND);
+	long transactionInterval = (long) (1f * GameLoop.NANO_PER_SECOND);
 	long nextTransaction;
 
 	private ArrayList<GameObject> gameObjects;
@@ -54,7 +54,7 @@ class ShaunState implements Loopable {
 
 	private Font verdana = new Font("verdana");
 	
-	public ShaunState(TextRenderer textRenderer, BasicRenderer renderer, Background background, Transactions transactions) {
+	public ShaunState(TextRenderer textRenderer, BasicRenderer renderer, Background background, Transactions transactions, Character c) {
 		this.textRenderer = textRenderer;
 		this.transactions = transactions;
 		this.manager = manager;
@@ -63,20 +63,12 @@ class ShaunState implements Loopable {
 		this.gameObjects = new ArrayList<>();
 		labels = new ArrayList<>();
 
-		int width = 80;
-		int height = 80;
+		
 
-		this.c = new Character();
-		this.c.setMoney(900.0);
-		this.c.setX(10 + width / 2);
-		this.c.setY(10 + height / 2);
-		this.c.setWidth(width);
-		this.c.setHeight(height);
-		this.c.setColour(new Colour(1f, 0f, 1f));
-		this.c.setModel(new TexturedModel(ModelGenerator.square(), TextureLoader.loadTexture("rocket.png")));
+		this.c = c;
 
-		height = 40;
-		width = 900;
+		int height = 40;
+		int width = 900;
 
 		HealthBar healthBarBackground = new HealthBar(c);
 		healthBarBackground.setColour(new Colour(1f, 0f, 0f));
@@ -125,15 +117,27 @@ class ShaunState implements Loopable {
 		this.gameObjects.add(healthBarForeground);
 		this.gameObjects.add(c);
 
-		File file = new File("res/nationwideData/customer131.csv");
-		transactions = new Transactions(file);
 		nextTransaction = System.nanoTime() + transactionInterval;
-
 	}
 
 	@Override
 	public void input() {
 
+		Transaction t = transactions.get(0);
+		
+		if (t.getX() < 250 && t.getX() > 240 && !t.getRemove()) {
+			if (t.getY() == 600) {
+				KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_KP_8] = true;
+			} else if(t.getY() == 500){
+				KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_KP_5] = true;
+			} else if(t.getY() == 300){
+				KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_KP_2] = true;
+			} else if(t.getY() == 200){
+				KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_KP_0] = true;
+			}
+			
+		}
+		
 		if ((KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_KP_8]|| KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_1]) && oneTimeout < 0) {
 			oneTimeout = timeoutReset;
 			processAction(MoveType.one);
@@ -179,7 +183,10 @@ class ShaunState implements Loopable {
 					c.changeScore(
 							t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X())));
 					t.setRemove(true);
-					hitLabel = new Label(null, TextModel.generate("Amount: " + t.getAmount() + "  Description: " + t.getDescription(), verdana, 700, -300, 1080, 300));
+					Label l = new Label(null, TextModel.generate("Amount: " + t.getAmount() + "  Description: " + t.getDescription(), verdana, 600, -1000, 1080, 300));
+					l.setY(-300);
+					l.setX(500);
+					labels.add(l);
 					if (c.getMoney() > 0) {
 						transactionInterval -= 1000000;
 					}
@@ -189,7 +196,7 @@ class ShaunState implements Loopable {
 
 	@Override
 	public void update() {
-
+		background.speedMultiplier = 1;
 		if (System.nanoTime() > nextTransaction) {
 			transactions.gotoNext();
 			labels.add(new Label((transactions.get(transactions.getPlace())), TextModel.generate((transactions.get(transactions.getPlace()).getAmount()) + "", verdana, 0, 0, 100, 100)));
