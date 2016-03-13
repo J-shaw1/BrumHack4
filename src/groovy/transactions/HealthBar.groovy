@@ -16,7 +16,7 @@ class HealthBar implements GameObject{
 	Colour colour
 	boolean green
 
-
+	boolean remove = false
 
 	public HealthBar(Character c) {
 		this.c = c;
@@ -29,7 +29,6 @@ class HealthBar implements GameObject{
 			if(y > 0){
 				int curX = this.getX()
 				curX = 260 - (500-y)/2
-				println curX
 				this.setX(curX)
 				setWidth(y)
 			}else {

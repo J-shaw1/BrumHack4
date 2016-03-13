@@ -19,6 +19,8 @@ class Transaction implements GameObject{
 	Colour colour = new Colour(r.nextInt(256),r.nextInt(256),r.nextInt(256))
 	Renderable model = ModelGenerator.square()
 	
+	boolean remove = false
+	
 	MoveType[] moveTypes
 
 	Map transactionTypeMap = [
@@ -32,10 +34,10 @@ class Transaction implements GameObject{
 	]
 	
 	Map yMap = [
-		(MoveType.up): TransactionConstants.Y_UP,
-		(MoveType.down): TransactionConstants.Y_DOWN,
-		(MoveType.left): TransactionConstants.Y_LEFT,
-		(MoveType.right): TransactionConstants.Y_RIGHT
+		(MoveType.one): TransactionConstants.Y_ONE,
+		(MoveType.two): TransactionConstants.Y_TWO,
+		(MoveType.three): TransactionConstants.Y_THREE,
+		(MoveType.four): TransactionConstants.Y_FOUR
 	]
 
 	Transaction(String[] parts){
@@ -69,4 +71,5 @@ class Transaction implements GameObject{
 	public void update() {
 		x -= TransactionConstants.MOVE_SPEED
 	}
+
 }

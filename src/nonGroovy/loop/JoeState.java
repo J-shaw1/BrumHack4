@@ -79,65 +79,78 @@ class JoeState implements Loopable {
 		
 	}
 
-	int upTimeout;
-	int leftTimeout;
-	int downTimeout;
-	int rightTimeout;
+	int oneTimeout;
+	int twoTimeout;
+	int threeTimeout;
+	int fourTimeout;
 	
 	int timeoutReset = 30;
 	
 	@Override
 	public void input() {
 		
-		
-		if (KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_UP] && upTimeout < 0) {
-			upTimeout = timeoutReset;
-			
-			for(GameObject gameObject : gameObjects){
-				if(gameObject instanceof Transaction){
-					
-					Transaction t = (Transaction) gameObject;
-					
-					if(t.getMoveTypes()[0] == MoveType.up){
-						if(t.getX() > TransactionConstants.getPERFECT_HIT_X() - 100 && t.getX() < TransactionConstants.getPERFECT_HIT_X() + 100){
-							//if we have a hit
-							c.changeScore(t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X())));
-						}
-					}
-				}
-			}
-			System.out.println("Score: " + score);
-			System.out.println("UP");
+		if (KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_KP_8] && oneTimeout < 0) {
+			oneTimeout = timeoutReset;
+			processAction(MoveType.one);
+			System.out.println("KP8");
 		}
 		
-		if (KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_LEFT]  && leftTimeout < 0) {
-			leftTimeout = timeoutReset;
-			System.out.println("LEFT");
+		if (KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_KP_5]  && twoTimeout < 0) {
+			twoTimeout = timeoutReset;
+			processAction(MoveType.two);
+			System.out.println("KP5");
 		}
 		
-		if (KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_DOWN]  && downTimeout < 0) {
-			downTimeout = timeoutReset;
-			System.out.println("DOWN");
+		if (KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_KP_2]  && threeTimeout < 0) {
+			threeTimeout = timeoutReset;
+			processAction(MoveType.three);
+			System.out.println("KP2");
 		}
 		
-		if (KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_RIGHT]  && rightTimeout < 0) {
-			rightTimeout = timeoutReset;
-			System.out.println("RIGHT");
+		if (KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_KP_0]  && fourTimeout < 0) {
+			fourTimeout = timeoutReset;
+			processAction(MoveType.four);
+			System.out.println("KP0");
 		}
 		
-		upTimeout--;
-		leftTimeout--;
-		downTimeout--;
-		rightTimeout--;
+		oneTimeout--;
+		twoTimeout--;
+		threeTimeout--;
+		fourTimeout--;
 		
 	}
 
+	public void processAction(MoveType moveType){	
+		for(GameObject gameObject : gameObjects){
+			if(gameObject instanceof Transaction){
+				
+				Transaction t = (Transaction) gameObject;
+				
+				if(t.getMoveTypes()[0] == moveType){
+					if(t.getX() > TransactionConstants.getPERFECT_HIT_X() - 100 && t.getX() < TransactionConstants.getPERFECT_HIT_X() + 100){
+						//if we have a hit
+						c.changeScore(t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X())));
+						t.setRemove(true);
+					}
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void update() {
 		
 		if(System.nanoTime() > nextTransaction){
 			gameObjects.add(transactions.getNext());
 			nextTransaction += transactionInterval;
+		}
+		
+		//Clean up
+		for(int i = gameObjects.size() - 1; i >=0; i--) {
+			
+			if(gameObjects.get(i).getRemove() || gameObjects.get(i).getX() < TransactionConstants.getPERFECT_HIT_X() - 150) {
+				gameObjects.remove(i);
+			}
 		}
 		
 		
