@@ -11,8 +11,8 @@ import groovy.transactions.MoveType;
 import groovy.transactions.Transaction;
 import groovy.transactions.TransactionConstants;
 import groovy.transactions.Transactions;
+import nonGroovy.entitys.Background;
 import nonGroovy.entitys.GameObject;
-import nonGroovy.models.ColouredModel;
 import nonGroovy.renderer.BasicRenderer;
 import nonGroovy.renderer.Colour;
 import nonGroovy.window.input.KeyInputCallback;
@@ -28,36 +28,38 @@ class DixonState implements Loopable {
 
 	int timeoutReset = 30;
 
-	private ArrayList<GameObject> gameObjects;
-	private GameStateManager manager;
-	Transactions transactions;
 	long transactionInterval = (long) (1 * GameLoop.NANO_PER_SECOND);
 	long nextTransaction;
 
+	private ArrayList<GameObject> gameObjects;
+	private GameStateManager manager;
+	Transactions transactions;
+
 	BasicRenderer renderer;
-	private ColouredModel testModel;
 	Character c;
+	private Background background;
 
 	public DixonState(GameStateManager manager) {
 		this.manager = manager;
+		this.background = new Background(-0.5, -1.0);
 		renderer = new BasicRenderer();
 		gameObjects = new ArrayList<>();
 
 		c = new Character();
 		int width = 80;
 		int height = 80;
-		c.setMoney(500.0);
+		c.setMoney(900.0);
 		c.setX(10 + width / 2);
 		c.setY(10 + height / 2);
 		c.setWidth(width);
 		c.setHeight(height);
 		c.setColour(new Colour(1f, 0f, 1f));
 
+		height = 40;
+		width = 900;
+
 		HealthBar healthBarBackground = new HealthBar(c);
 		healthBarBackground.setColour(new Colour(1f, 0f, 0f));
-
-		height = 40;
-		width = 500;
 
 		healthBarBackground.setX(10 + width / 2);
 		healthBarBackground.setY(660 + height / 2);
@@ -73,7 +75,7 @@ class DixonState implements Loopable {
 		healthBarForeground.setHeight(height);
 		healthBarForeground.setGreen(true);
 
-		// demo lines
+		// Demo lines
 		Character left = new Character();
 		left.setX(TransactionConstants.getPERFECT_HIT_X() - 100);
 		left.setY(500);
@@ -157,6 +159,9 @@ class DixonState implements Loopable {
 					c.changeScore(
 							t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X())));
 					t.setRemove(true);
+					if (c.getMoney() > 0) {
+						transactionInterval -= 1000000;
+					}
 				}
 			}
 	}
@@ -167,35 +172,47 @@ class DixonState implements Loopable {
 		if (System.nanoTime() > nextTransaction) {
 			transactions.gotoNext();
 			nextTransaction += transactionInterval;
+			System.out.println(transactionInterval);
 		}
 
 		// Clean up
 		for (int i = transactions.getPlace(); i >= 0; i--) {
 
-			if (transactions.get(i).getRemove() || (transactions.get(i).getX() < TransactionConstants.getPERFECT_HIT_X()
-					- TransactionConstants.getPERFECT_FLOAT() - 50)) {
+			Transaction t = transactions.get(i);
+
+			if ((t.getX() < TransactionConstants.getPERFECT_HIT_X() - TransactionConstants.getPERFECT_FLOAT() - 50)) {
+				c.changeScore(2.5 * t.getAmount());
+				t.setRemove(true);
+				if (transactionInterval > 500000000) {
+					transactionInterval -= 50000000;
+				}
+			}
+
+			if (t.getRemove()) {
+
 				transactions.remove(i);
 				transactions.backPlace();
 			} else {
-				transactions.get(i).update();
+				t.update();
 			}
 		}
 
 		for (GameObject gameObject : gameObjects) {
 			gameObject.update();
 		}
-		// System.out.println("Score: " + score);
+		background.update();
 	}
 
 	@Override
 	public void render() {
+
+		background.render(renderer);
 		for (int i = 0; i <= transactions.getPlace(); i++) {
 			renderer.prepareEntity(transactions.get(i));
 		}
 		for (GameObject gameObject : gameObjects) {
 			renderer.prepareEntity(gameObject);
 		}
-
 		renderer.render();
 
 	}
