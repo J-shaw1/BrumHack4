@@ -44,9 +44,7 @@ public class BasicRenderer {
 		
 		
 		glClear(GL_COLOR_BUFFER_BIT);
-		System.out.println();
 		for (GameObject renderable : toRender) {
-			System.out.println(renderable.getX());
 			Renderable masterModel = renderable.getModel();
 			
 			Model model = masterModel.getModel();
