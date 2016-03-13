@@ -13,8 +13,11 @@ import groovy.transactions.TransactionConstants;
 import groovy.transactions.Transactions;
 import nonGroovy.entitys.Background;
 import nonGroovy.entitys.GameObject;
+import nonGroovy.models.ModelGenerator;
+import nonGroovy.models.TexturedModel;
 import nonGroovy.renderer.BasicRenderer;
 import nonGroovy.renderer.Colour;
+import nonGroovy.renderer.TextureLoader;
 import nonGroovy.window.input.KeyInputCallback;
 
 class DixonState implements Loopable {
@@ -42,18 +45,20 @@ class DixonState implements Loopable {
 	public DixonState(GameStateManager manager) {
 		this.manager = manager;
 		this.background = new Background(-0.5, -1.0);
-		renderer = new BasicRenderer();
-		gameObjects = new ArrayList<>();
+		this.renderer = new BasicRenderer();
+		this.gameObjects = new ArrayList<>();
 
-		c = new Character();
 		int width = 80;
 		int height = 80;
-		c.setMoney(900.0);
-		c.setX(10 + width / 2);
-		c.setY(10 + height / 2);
-		c.setWidth(width);
-		c.setHeight(height);
-		c.setColour(new Colour(1f, 0f, 1f));
+
+		this.c = new Character();
+		this.c.setMoney(900.0);
+		this.c.setX(10 + width / 2);
+		this.c.setY(10 + height / 2);
+		this.c.setWidth(width);
+		this.c.setHeight(height);
+		this.c.setColour(new Colour(1f, 0f, 1f));
+		this.c.setModel(new TexturedModel(ModelGenerator.square(), TextureLoader.loadTexture("rocket.png")));
 
 		height = 40;
 		width = 900;
@@ -97,13 +102,13 @@ class DixonState implements Loopable {
 		right.setHeight(1000);
 		right.setColour(new Colour(1f, 0f, 1f));
 
-		gameObjects.add(left);
-		gameObjects.add(center);
-		gameObjects.add(right);
+		this.gameObjects.add(left);
+		this.gameObjects.add(center);
+		this.gameObjects.add(right);
 
-		gameObjects.add(healthBarBackground);
-		gameObjects.add(healthBarForeground);
-		gameObjects.add(c);
+		this.gameObjects.add(healthBarBackground);
+		this.gameObjects.add(healthBarForeground);
+		this.gameObjects.add(c);
 
 		File file = new File("res/nationwideData/customer131.csv");
 		transactions = new Transactions(file);
@@ -181,11 +186,17 @@ class DixonState implements Loopable {
 			Transaction t = transactions.get(i);
 
 			if ((t.getX() < TransactionConstants.getPERFECT_HIT_X() - TransactionConstants.getPERFECT_FLOAT() - 50)) {
-				c.changeScore(2.5 * t.getAmount());
+
 				t.setRemove(true);
+				if (t.getAmount() < 0) {
+					c.changeScore(2.5 * t.getAmount());
+				}
 				if (transactionInterval > 500000000) {
 					transactionInterval -= 50000000;
+				} else {
+					transactionInterval = 500000000;
 				}
+
 			}
 
 			if (t.getRemove()) {

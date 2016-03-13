@@ -5,7 +5,9 @@ import java.lang.invoke.SwitchPoint;
 import nonGroovy.entitys.GameObject
 import nonGroovy.models.ModelGenerator
 import nonGroovy.models.Renderable
+import nonGroovy.models.TexturedModel;
 import nonGroovy.renderer.Colour
+import nonGroovy.renderer.TextureLoader;
 
 class Transaction implements GameObject{
 		
@@ -16,7 +18,7 @@ class Transaction implements GameObject{
 	int x, y
 	int width, height
 	Colour colour
-	Renderable model = ModelGenerator.square()
+	Renderable model;
 	
 	boolean remove = false
 	
@@ -52,9 +54,8 @@ class Transaction implements GameObject{
 		x = TransactionConstants.STARTING_X
 		
 		y = yMap.get(moveTypes[0])
-		
+		this.setModel(new TexturedModel(ModelGenerator.square(), TextureLoader.loadTexture("singleAstorid.png")));
 		this.width = 20 + ((Math.sqrt(Math.abs(amount) * 2)) as int)
-		println "SWRL: ${Math.sqrt(Math.abs(amount) * 2)}"
 		this.height = 20 + ((Math.sqrt(Math.abs(amount) * 2)) as int)
 		
 		if(amount >= 0) {
