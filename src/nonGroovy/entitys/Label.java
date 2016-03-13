@@ -58,10 +58,12 @@ public class Label implements GameObject{
 
 	@Override
 	public void update() {
-		model.setX(object.getX());
-		model.setY((int) (object.getY() - object.getHeight() * 0.75));
-		if(object.getRemove()){
-			remove = true;
+		if (object != null) {
+			model.setX(object.getX());
+			model.setY((int) (object.getY() - object.getHeight() * 0.75));
+			if(object.getRemove()){
+				remove = true;
+			}
 		}
 	}
 

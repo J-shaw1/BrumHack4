@@ -1,7 +1,10 @@
 package nonGroovy.loop;
 
+import java.io.File;
+
 import org.lwjgl.glfw.GLFW;
 
+import groovy.transactions.Transactions;
 import nonGroovy.entitys.Background;
 import nonGroovy.renderer.BasicRenderer;
 import nonGroovy.renderer.TextureLoader;
@@ -15,6 +18,9 @@ class Game implements Loopable {
 	BasicRenderer renderer = new BasicRenderer();
 	TextRenderer textRenderer = new TextRenderer();
 	Background background = new Background(-0.5, -1.0);
+	
+	File file = new File("res/nationwideData/customer131.csv");
+	Transactions transactions = new Transactions(file);
 
 	public Game(GameStateManager manager) {
 		this.manager = manager;
@@ -32,7 +38,7 @@ class Game implements Loopable {
 			manager.pushState(new JoeState());
 		}
 		if(KeyInputCallback.isKeyDown[GLFW.GLFW_KEY_S]){
-			manager.pushState(new ShaunState(textRenderer, renderer, background));
+			manager.pushState(new ShaunState(textRenderer, renderer, background, transactions));
 		}
 	}
 

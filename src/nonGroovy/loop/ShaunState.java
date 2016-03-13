@@ -47,12 +47,16 @@ class ShaunState implements Loopable {
 	BasicRenderer renderer;
 	TextRenderer textRenderer;
 	Character c;
+	
+	Label hitLabel;
+	
 	private Background background;
 
 	private Font verdana = new Font("verdana");
 	
-	public ShaunState(TextRenderer textRenderer, BasicRenderer renderer, Background background) {
+	public ShaunState(TextRenderer textRenderer, BasicRenderer renderer, Background background, Transactions transactions) {
 		this.textRenderer = textRenderer;
+		this.transactions = transactions;
 		this.manager = manager;
 		this.background = background;
 		this.renderer = renderer;
@@ -175,6 +179,7 @@ class ShaunState implements Loopable {
 					c.changeScore(
 							t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X())));
 					t.setRemove(true);
+					hitLabel = new Label(null, TextModel.generate("Amount: " + t.getAmount() + "  Description: " + t.getDescription(), verdana, 700, -300, 1080, 300));
 					if (c.getMoney() > 0) {
 						transactionInterval -= 1000000;
 					}
@@ -233,7 +238,9 @@ class ShaunState implements Loopable {
 			}
 		}
 		
-		
+		if (hitLabel != null) {
+			hitLabel.update();
+		}
 		
 		background.update();
 	}
@@ -247,6 +254,9 @@ class ShaunState implements Loopable {
 		}
 		for (GameObject gameObject : gameObjects) {
 			renderer.prepareEntity(gameObject);
+		}
+		if (hitLabel != null) {
+			textRenderer.prepareEntity(hitLabel.getTextModel());
 		}
 		for (Label label : labels) {
 			textRenderer.prepareEntity(label.getTextModel());
