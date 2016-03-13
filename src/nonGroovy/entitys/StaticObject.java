@@ -70,4 +70,10 @@ public class StaticObject implements GameObject{
 		
 	}
 
+	@Override
+	public boolean getRemove() {
+		
+		return false;
+	}
+
 }
