@@ -15,13 +15,13 @@ class Character implements GameObject{
 
 	int x,y
 	int width,height
-	
+
 	Renderable model;
 
 	Colour colour
-	
+
 	boolean remove = false
-	
+
 	public Character() {
 		model = ModelGenerator.square();
 		colour = new Colour();
@@ -30,12 +30,15 @@ class Character implements GameObject{
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	void changeScore(double scoreChange) {
-		// TODO Auto-generated method stub
-		
+
+		double curMoneys = this.money
+		curMoneys = curMoneys + scoreChange
+		setMoney(curMoneys)
+
 	}
 
 }
