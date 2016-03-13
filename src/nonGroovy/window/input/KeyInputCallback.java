@@ -11,6 +11,7 @@ public class KeyInputCallback extends GLFWKeyCallback {
 	@Override
 	public void invoke(long window, int key, int scancode, int action, int mods) {
 		if (key >= 0 &&  key < 65536) {
+			System.out.println(key);
 			isKeyDown[key] = action != GLFW.GLFW_RELEASE;
 		}
 	}

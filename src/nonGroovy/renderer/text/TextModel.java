@@ -13,6 +13,14 @@ public class TextModel implements Renderable{
 	
 	private int x,y,width,height; 
 	
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
 	private Model model;
 	private int textureID;
 	

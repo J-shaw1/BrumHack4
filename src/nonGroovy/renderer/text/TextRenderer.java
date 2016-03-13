@@ -39,8 +39,6 @@ public class TextRenderer {
 	}
 
 	public void render() {
-
-		glClear(GL_COLOR_BUFFER_BIT);
 		for (TextModel renderable : toRender) {
 			
 			Renderable masterModel = renderable.getModel();
@@ -49,8 +47,8 @@ public class TextRenderer {
 			
 
 			textShader.enable();
-			textShader.setX(540);
-			textShader.setY(360);
+			textShader.setX(renderable.getX());
+			textShader.setY(renderable.getY());
 			textShader.setWidth(renderable.getWidth());
 			textShader.setHeight(renderable.getWidth());
 

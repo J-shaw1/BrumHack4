@@ -1,5 +1,6 @@
 package nonGroovy.loop;
 
+import java.awt.font.FontRenderContext;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -13,11 +14,15 @@ import groovy.transactions.TransactionConstants;
 import groovy.transactions.Transactions;
 import nonGroovy.entitys.Background;
 import nonGroovy.entitys.GameObject;
+import nonGroovy.entitys.Label;
 import nonGroovy.models.ModelGenerator;
 import nonGroovy.models.TexturedModel;
 import nonGroovy.renderer.BasicRenderer;
 import nonGroovy.renderer.Colour;
 import nonGroovy.renderer.TextureLoader;
+import nonGroovy.renderer.text.Font;
+import nonGroovy.renderer.text.TextModel;
+import nonGroovy.renderer.text.TextRenderer;
 import nonGroovy.window.input.KeyInputCallback;
 
 class ShaunState implements Loopable {
@@ -35,18 +40,24 @@ class ShaunState implements Loopable {
 	long nextTransaction;
 
 	private ArrayList<GameObject> gameObjects;
+	private ArrayList<Label> labels;
 	private GameStateManager manager;
 	Transactions transactions;
 
 	BasicRenderer renderer;
+	TextRenderer textRenderer;
 	Character c;
 	private Background background;
 
+	private Font verdana = new Font("verdana");
+	
 	public ShaunState() {
+		textRenderer = new TextRenderer();
 		this.manager = manager;
 		this.background = new Background(-0.5, -1.0);
 		this.renderer = new BasicRenderer();
 		this.gameObjects = new ArrayList<>();
+		labels = new ArrayList<>();
 
 		int width = 80;
 		int height = 80;
@@ -176,6 +187,7 @@ class ShaunState implements Loopable {
 
 		if (System.nanoTime() > nextTransaction) {
 			transactions.gotoNext();
+			labels.add(new Label((transactions.get(transactions.getPlace())), TextModel.generate((transactions.get(transactions.getPlace()).getAmount()) + "", verdana, 0, 0, 100, 100)));
 			nextTransaction += transactionInterval;
 			System.out.println(transactionInterval);
 		}
@@ -210,6 +222,17 @@ class ShaunState implements Loopable {
 		for (GameObject gameObject : gameObjects) {
 			gameObject.update();
 		}
+		
+		for (int i = labels.size()-1; i >= 0; i--) {
+			if(labels.get(i).getRemove()){
+				labels.remove(i);
+			} else {
+				labels.get(i).update();	
+			}
+		}
+		
+		
+		
 		background.update();
 	}
 
@@ -223,7 +246,12 @@ class ShaunState implements Loopable {
 		for (GameObject gameObject : gameObjects) {
 			renderer.prepareEntity(gameObject);
 		}
+		for (Label label : labels) {
+			textRenderer.prepareEntity(label.getTextModel());
+		}
+
 		renderer.render();
+		textRenderer.render();
 
 	}
 
