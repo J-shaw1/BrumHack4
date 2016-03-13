@@ -17,4 +17,6 @@ public interface GameObject {
 	public Renderable getModel();
 	
 	public void update();
+	
+	public boolean getRemove();
 }

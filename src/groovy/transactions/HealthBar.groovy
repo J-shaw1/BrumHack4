@@ -16,7 +16,7 @@ class HealthBar implements GameObject{
 	Colour colour
 	boolean green
 
-
+	boolean remove = false
 
 	public HealthBar(Character c) {
 		this.c = c;

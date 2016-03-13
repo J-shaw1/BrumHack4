@@ -20,6 +20,8 @@ class Character implements GameObject{
 
 	Colour colour
 	
+	boolean remove = false
+	
 	public Character() {
 		model = ModelGenerator.square();
 		colour = new Colour();
