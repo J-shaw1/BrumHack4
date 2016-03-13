@@ -127,7 +127,11 @@ class JoeState implements Loopable {
 				if(t.getX() > TransactionConstants.getPERFECT_HIT_X() - TransactionConstants.getPERFECT_FLOAT() 
 						&& t.getX() < TransactionConstants.getPERFECT_HIT_X() + TransactionConstants.getPERFECT_FLOAT()){
 					//if we have a hit
+					System.out.println("Worth: " + t.getAmount());
+					System.out.println("Score change: " + t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X())));
+					
 					c.changeScore(t.calculateAmountEffect(Math.abs(t.getX() - TransactionConstants.getPERFECT_HIT_X())));
+					System.out.println("Score: " + c.getMoney());
 					t.setRemove(true);
 				}
 			}
@@ -145,11 +149,19 @@ class JoeState implements Loopable {
 		//Clean up
 		for(int i = transactions.getPlace(); i >=0; i--) {
 			
-			if(transactions.get(i).getRemove() || (transactions.get(i).getX() < TransactionConstants.getPERFECT_HIT_X() - TransactionConstants.getPERFECT_FLOAT() - 50)) {
+			Transaction t = transactions.get(i);
+			
+			if((t.getX() < TransactionConstants.getPERFECT_HIT_X() - TransactionConstants.getPERFECT_FLOAT() - 50)){
+				c.changeScore(2.5 * t.getAmount());
+				t.setRemove(true);
+			}
+			
+			if(t.getRemove()) {
+				
 				transactions.remove(i);
 				transactions.backPlace();
 			} else {
-				transactions.get(i).update();
+				t.update();
 			}
 		}
 		
