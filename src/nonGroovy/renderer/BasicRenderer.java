@@ -2,6 +2,7 @@ package nonGroovy.renderer;
 
 import java.util.ArrayList;
 
+import groovy.ui.SystemOutputInterceptor;
 import nonGroovy.entitys.GameObject;
 import nonGroovy.models.ColouredModel;
 import nonGroovy.models.Model;
@@ -43,9 +44,9 @@ public class BasicRenderer {
 		
 		
 		glClear(GL_COLOR_BUFFER_BIT);
-		
+		System.out.println();
 		for (GameObject renderable : toRender) {
-			
+			System.out.println(renderable.getX());
 			Renderable masterModel = renderable.getModel();
 			
 			Model model = masterModel.getModel();
