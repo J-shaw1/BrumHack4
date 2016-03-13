@@ -39,6 +39,19 @@ public class Model implements Renderable{
 
 		glBindVertexArray(0);
 	}
+	
+	public Model(float[] positions, float[] textureCoords, Integer x) {
+		
+		this.vaoID = glGenVertexArrays();
+		this.vertexCount = positions.length / 3;
+
+		glBindVertexArray(vaoID);
+		
+		storeVertextAttributeData(0, positions, 3);
+		storeVertextAttributeData(1, textureCoords, 2);
+
+		glBindVertexArray(0);
+	}
 
 	private void storeVertextAttributeData(int attributeLocation, float[] data, int sizeOfElement) {
 

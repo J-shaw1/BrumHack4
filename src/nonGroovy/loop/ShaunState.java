@@ -1,24 +1,25 @@
 package nonGroovy.loop;
 
-import nonGroovy.entitys.Background;
-import nonGroovy.entitys.GameObject;
-import nonGroovy.entitys.StaticObject;
-import nonGroovy.models.ModelGenerator;
-import nonGroovy.models.TexturedModel;
-import nonGroovy.renderer.BasicRenderer;
-import nonGroovy.renderer.TextureLoader;
+import static org.lwjgl.opengl.GL11.glClearColor;
 
-import static org.lwjgl.opengl.GL11.*;
+import nonGroovy.entitys.Background;
+import nonGroovy.renderer.BasicRenderer;
+import nonGroovy.renderer.text.Font;
+import nonGroovy.renderer.text.TextModel;
+import nonGroovy.renderer.text.TextRenderer;
 
 class ShaunState implements Loopable {
 	
+	TextRenderer textRenderer;
 	BasicRenderer renderer;
-
 	Background background;
 	
+	TextModel model = TextModel.generate("Hello Joe!", new Font("verdana"), 540, 360, 200, 50);
+	
 	public ShaunState() {
-		background = new Background(-0.5, -1);
 		
+		background = new Background(-0.5, -1);
+		textRenderer = new TextRenderer();
 		renderer = new BasicRenderer();
 		glClearColor(0,0,0,1);
 	}
@@ -35,8 +36,10 @@ class ShaunState implements Loopable {
 
 	@Override
 	public void render() {
-		background.render(renderer);
-		renderer.render();
+		//background.render(renderer);
+		textRenderer.prepareEntity(model);
+		textRenderer.render();
+		//renderer.render();
 	}
 
 	@Override

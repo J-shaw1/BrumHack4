@@ -22,5 +22,11 @@ public class Vec3f {
 	public Vec3f(){
 		this(1);
 	}
+
+	public void set(float r, float g, float b) {
+		this.x = r;
+		this.y = g;
+		this.z = b;
+	}
 	
 }
