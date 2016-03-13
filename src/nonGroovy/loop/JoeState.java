@@ -152,7 +152,11 @@ class JoeState implements Loopable {
 			Transaction t = transactions.get(i);
 			
 			if((t.getX() < TransactionConstants.getPERFECT_HIT_X() - TransactionConstants.getPERFECT_FLOAT() - 50)){
-				c.changeScore(2.5 * t.getAmount());
+				if(t.getAmount() < 0) {					
+					c.changeScore(2.5 * t.getAmount());
+				}
+				System.out.println("amount: " + t.getAmount());
+				System.out.println("score:  " + c.getMoney());
 				t.setRemove(true);
 			}
 			
