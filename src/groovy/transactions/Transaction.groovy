@@ -53,8 +53,9 @@ class Transaction implements GameObject{
 		
 		y = yMap.get(moveTypes[0])
 		
-		this.width = TransactionConstants.WIDTH
-		this.height = TransactionConstants.HEIGHT
+		this.width = 20 + ((Math.sqrt(Math.abs(amount) * 2)) as int)
+		println "SWRL: ${Math.sqrt(Math.abs(amount) * 2)}"
+		this.height = 20 + ((Math.sqrt(Math.abs(amount) * 2)) as int)
 		
 		if(amount >= 0) {
 			colour = new Colour(0, 255, 0)	
