@@ -15,8 +15,7 @@ class Transaction implements GameObject{
 
 	int x, y
 	int width, height
-	static Random r = new Random()
-	Colour colour = new Colour(r.nextInt(256),r.nextInt(256),r.nextInt(256))
+	Colour colour
 	Renderable model = ModelGenerator.square()
 	
 	boolean remove = false
@@ -56,6 +55,12 @@ class Transaction implements GameObject{
 		
 		this.width = TransactionConstants.WIDTH
 		this.height = TransactionConstants.HEIGHT
+		
+		if(amount >= 0) {
+			colour = new Colour(0, 255, 0)	
+		} else {
+			colour = new Colour(255, 0, 0)
+		}
 		
 	}
 
