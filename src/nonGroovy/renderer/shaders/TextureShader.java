@@ -40,11 +40,16 @@ public class TextureShader {
 				+ "out vec4 FragColor;\n"
 				+ "uniform vec3 colour;\n"
 				+ "uniform sampler2D myTexture;\n"
+				+ "uniform float tinted;\n"
 				+ "in vec2 textureCoord;\n"
 				+ ""
 				+ "void main(){\n"
 				+ "    FragColor = vec4(colour,1);\n"
-				+ "	   FragColor = texture2D(myTexture, vec2(textureCoord.x,1-textureCoord.y));"
+				+ "	   FragColor = texture2D(myTexture, vec2(textureCoord.x,1-textureCoord.y));\n"
+				+ "	   if(tinted == 1){\n"
+				+ "         FragColor = vec4(mix(FragColor.xyz, colour,0.5),FragColor.a);\n"
+				+ "         //FragColor = vec4(colour,1);\n"
+				+ "	   }\n"
 				+ "}";
 		
 		int vertexShaderID = loadShader(vertexString, GL_VERTEX_SHADER);
@@ -62,6 +67,7 @@ public class TextureShader {
 		locationColour = glGetUniformLocation(programID, "colour");
 		locationWidth = glGetUniformLocation(programID, "width");
 		locationHeight = glGetUniformLocation(programID, "height");
+		locationTinted = glGetUniformLocation(programID, "tinted");
 		
 		
 	}
@@ -71,6 +77,7 @@ public class TextureShader {
 	private int locationHeight;
 	private int locationX;
 	private int locationY;
+	private int locationTinted;
 	
 	public void setColour(Colour c){
 		loadVector3(locationColour, new Vec3f(c.r, c.g, c.b));
@@ -168,6 +175,14 @@ public class TextureShader {
 	
 	public static void main(String[] args) {
 		TextureShader bs = new TextureShader();
+	}
+
+	public void setTinted(boolean b) {
+		if (b) {
+			loadFloat(locationTinted, 1);
+		} else {
+			loadFloat(locationTinted, 0);
+		}
 	}
 	
 }

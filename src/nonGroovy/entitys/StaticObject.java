@@ -76,4 +76,10 @@ public class StaticObject implements GameObject{
 		return false;
 	}
 
+	@Override
+	public boolean tinted() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

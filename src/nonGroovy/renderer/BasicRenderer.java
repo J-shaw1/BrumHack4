@@ -2,6 +2,7 @@ package nonGroovy.renderer;
 
 import java.util.ArrayList;
 
+import groovy.transactions.Transaction;
 import groovy.ui.SystemOutputInterceptor;
 import nonGroovy.entitys.GameObject;
 import nonGroovy.models.ColouredModel;
@@ -51,12 +52,12 @@ public class BasicRenderer {
 			
 			if (masterModel.GetTexture() == -1) {
 				basicShader.enable();
+				
 				basicShader.setColour(renderable.getColour());
 				basicShader.setHeight(renderable.getHeight());
 				basicShader.setWidth(renderable.getWidth());
 				basicShader.setX(renderable.getX());
 				basicShader.setY(renderable.getY());
-				
 				glBindVertexArray(model.getVaoID());
 				
 				glEnableVertexAttribArray(0);
@@ -70,11 +71,22 @@ public class BasicRenderer {
 				basicShader.disable();
 			} else {
 				texturedShader.enable();
-				texturedShader.setColour(renderable.getColour());
+				if (renderable instanceof Transaction) {
+					Transaction t = (Transaction)renderable;
+					if(t.getAmount() > 0){
+						basicShader.setColour(new Colour(0f,1f,0f));
+					} else {
+						basicShader.setColour(new Colour(1f,0f,0f));
+					}
+					
+				} else {
+					texturedShader.setColour(renderable.getColour());
+				}
 				texturedShader.setHeight(renderable.getHeight());
 				texturedShader.setWidth(renderable.getWidth());
 				texturedShader.setX(renderable.getX());
 				texturedShader.setY(renderable.getY());
+				texturedShader.setTinted(renderable.tinted());
 				
 				glBindVertexArray(model.getVaoID());
 				

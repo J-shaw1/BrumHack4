@@ -79,4 +79,10 @@ class Transaction implements GameObject{
 		x -= TransactionConstants.MOVE_SPEED
 	}
 
+	@Override
+	public boolean tinted() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

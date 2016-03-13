@@ -108,7 +108,6 @@ public class TextModel implements Renderable{
 		float highestY = -10000;
 		float lowestY = 10000;
 		
-		System.out.println("Positions");
 		for (int j = 1; j < positions.length; j+= 3) {
 			if(positions[j]> highestY) highestY = positions[j];
 			if(positions[j]< lowestY) lowestY = positions[j];
@@ -124,10 +123,7 @@ public class TextModel implements Renderable{
 			positions[j + 1] *= scale; 
 			positions[j + 1] = 1- positions[j + 1]; 
 		}
-		
-		for (int j = 0; j < positions.length; j++) {
-			System.out.println(positions[j]); 
-		}
+
 		System.out.println("textures");
 		for (int j = 1; j < textures.length; j+= 2) {
 			textures[j] = 1- textures[j];

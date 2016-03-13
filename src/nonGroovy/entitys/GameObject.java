@@ -18,5 +18,7 @@ public interface GameObject {
 	
 	public void update();
 	
+	public boolean tinted();
+	
 	public boolean getRemove();
 }

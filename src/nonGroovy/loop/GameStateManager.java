@@ -2,6 +2,8 @@ package nonGroovy.loop;
 
 import java.util.ArrayList;
 
+import nonGroovy.renderer.BasicRenderer;
+import nonGroovy.renderer.text.TextRenderer;
 import nonGroovy.window.Window;
 
 public class GameStateManager implements Loopable{

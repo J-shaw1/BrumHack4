@@ -41,4 +41,10 @@ class Character implements GameObject{
 
 	}
 
+	@Override
+	public boolean tinted() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

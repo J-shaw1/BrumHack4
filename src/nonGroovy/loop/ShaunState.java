@@ -51,11 +51,11 @@ class ShaunState implements Loopable {
 
 	private Font verdana = new Font("verdana");
 	
-	public ShaunState() {
-		textRenderer = new TextRenderer();
+	public ShaunState(TextRenderer textRenderer, BasicRenderer renderer, Background background) {
+		this.textRenderer = textRenderer;
 		this.manager = manager;
-		this.background = new Background(-0.5, -1.0);
-		this.renderer = new BasicRenderer();
+		this.background = background;
+		this.renderer = renderer;
 		this.gameObjects = new ArrayList<>();
 		labels = new ArrayList<>();
 
@@ -188,6 +188,8 @@ class ShaunState implements Loopable {
 		if (System.nanoTime() > nextTransaction) {
 			transactions.gotoNext();
 			labels.add(new Label((transactions.get(transactions.getPlace())), TextModel.generate((transactions.get(transactions.getPlace()).getAmount()) + "", verdana, 0, 0, 100, 100)));
+			
+			
 			nextTransaction += transactionInterval;
 			System.out.println(transactionInterval);
 		}
